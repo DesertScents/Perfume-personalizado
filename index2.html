@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creador de Perfume Personalizado</title>
+    <style>
+        :root {
+            --color-background: #f3efe6;
+            --color-surface: #ffffff;
+            --color-text: #000000;
+            --color-text-secondary: #6e6e73;
+            --color-primary: #000000;
+            --color-primary-hover: #424245;
+            --color-primary-active: #1d1d1f;
+            --color-border: rgba(0, 0, 0, 0.1);
+            --color-card-border: rgba(0, 0, 0, 0.06);
+            --color-teal-500-rgb: 33, 128, 141;
+        }
+
+        /* Temas por género */
+        body.theme-feminine {
+            --color-background: #fff5f9;
+            --color-surface: #ffffff;
+            --color-primary: #d24d8d;
+            --color-primary-hover: #b83d77;
+            --color-primary-active: #9e2d61;
+            --color-border: rgba(210, 77, 141, 0.15);
+            --color-card-border: rgba(210, 77, 141, 0.1);
+        }
+
+        body.theme-masculine {
+            --color-background: #f5f7fa;
+            --color-surface: #ffffff;
+            --color-primary: #4a5a7a;
+            --color-primary-hover: #3a4a6a;
+            --color-primary-active: #2a3a5a;
+            --color-border: rgba(74, 90, 122, 0.15);
+            --color-card-border: rgba(74, 90, 122, 0.1);
+        }
+
+        body.theme-neutral {
+            --color-background: #f9f5ff;
+            --color-surface: #ffffff;
+            --color-primary: #7f3dba;
+            --color-primary-hover: #6f2daa;
+            --color-primary-active: #5f1d9a;
+            --color-border: rgba(127, 61, 186, 0.15);
+            --color-card-border: rgba(127, 61, 186, 0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-background: var(--color-charcoal-700);
+                --color-surface: var(--color-charcoal-800);
+                --color-text: var(--color-gray-200);
+                --color-border: rgba(119, 124, 124, 0.3);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.47059;
+            padding: 20px;
+            transition: background-color 0.5s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .brand-logo {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--color-text);
+            z-index: 1000;
+            background: var(--color-surface);
+            padding: 10px 20px;
+            border-radius: 980px;
+            border: 1.5px solid var(--color-border);
+            letter-spacing: 0.05em;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            font-weight: 600;
+            letter-spacing: -0.005em;
+            transition: color 0.3s ease;
+        }
+
+        .header p {
+            color: var(--color-text-secondary);
+            font-size: 17px;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--color-surface);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            border: 1px solid var(--color-card-border);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-teal-600));
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        .question-card {
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 18px;
+            padding: 48px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .question-number {
+            color: var(--color-text-secondary);
+            font-weight: 500;
+            font-size: 13px;
+            margin-bottom: 16px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 36px;
+            color: var(--color-text);
+            letter-spacing: -0.005em;
+        }
+
+        .slider-container {
+            margin-bottom: 30px;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: linear-gradient(to right, 
+                rgba(var(--color-teal-500-rgb), 0.2) 0%, 
+                rgba(var(--color-teal-500-rgb), 0.4) 50%, 
+                var(--color-primary) 100%);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider-value {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-top: 15px;
+        }
+
+        .price-display {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: rgba(var(--color-teal-500-rgb), 0.1);
+            border-radius: 20px;
+            border: 2px solid var(--color-primary);
+        }
+
+        .gender-selector {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .gender-option {
+            flex: 1;
+            padding: 24px 10px;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .gender-option.active {
+            background: var(--color-text);
+            color: white;
+            border-color: var(--color-text);
+            transform: scale(1.02);
+        }
+
+        .gender-option:hover:not(.active) {
+            border-color: var(--color-text);
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .usage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .usage-option {
+            padding: 20px;
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .usage-option .icon {
+            font-size: 32px;
+        }
+
+        .usage-option .label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .usage-option.selected {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            transform: scale(1.02);
+        }
+
+        .usage-option.selected .label {
+            color: white;
+        }
+
+        .usage-option:hover:not(.selected) {
+            border-color: var(--color-primary);
+            background: rgba(var(--color-teal-500-rgb), 0.05);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 980px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: -0.022em;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-primary-hover);
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-text);
+            border: 1.5px solid var(--color-border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--color-text);
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results {
+            display: none;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .result-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 18px;
+            padding: 48px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .result-title {
+            font-size: 17px;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            margin-bottom: 16px;
+            text-align: center;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .perfume-name {
+            font-size: 48px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 36px;
+            color: var(--color-text);
+            letter-spacing: -0.015em;
+        }
+
+        .notes-section {
+            margin-bottom: 30px;
+        }
+
+        .notes-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .note-item {
+            display: inline-block;
+            background-color: rgba(var(--color-teal-500-rgb), 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 14px;
+            border: 1px solid rgba(var(--color-teal-500-rgb), 0.3);
+        }
+
+        .personality-match {
+            background-color: rgba(var(--color-teal-500-rgb), 0.08);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .personality-match h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--color-primary);
+        }
+
+        .description {
+            line-height: 1.8;
+            color: var(--color-text-secondary);
+            margin-bottom: 15px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .result-card {
+                background: linear-gradient(135deg, var(--color-charcoal-800) 0%, var(--color-charcoal-700) 100%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="brand-logo">DesertScents</div>
+    <div class="container">
+        <div class="header">
+            <h1 id="appTitle">🌸 Creador de Perfume Personalizado</h1>
+            <p>Responde 20 preguntas sobre tu personalidad y preferencias para crear tu fragancia única</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div id="questionContainer"></div>
+
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "¿Cuál es tu género?",
+                leftLabel: "Mujer",
+                rightLabel: "Hombre", 
+                category: "gender",
+                isGender: true,
+                isThreeOption: true,
+                options: ["Mujer", "Otro", "Hombre"]
+            },
+            {
+                question: "¿Qué tan extrovertida/o te consideras?",
+                leftLabel: "Muy introvertido",
+                rightLabel: "Muy extrovertido",
+                category: "personality"
+            },
+            {
+                question: "¿Prefieres ambientes naturales o urbanos?",
+                leftLabel: "Naturaleza pura",
+                rightLabel: "Ciudad moderna",
+                category: "environment"
+            },
+            {
+                question: "¿Cómo describirías tu estilo de vida?",
+                leftLabel: "Relajado y simple",
+                rightLabel: "Activo y sofisticado",
+                category: "lifestyle"
+            },
+            {
+                question: "¿Qué tan importante es para ti destacar?",
+                leftLabel: "Prefiero discreción",
+                rightLabel: "Me encanta destacar",
+                category: "personality"
+            },
+            {
+                question: "¿Prefieres aromas dulces o frescos?",
+                leftLabel: "Muy frescos",
+                rightLabel: "Muy dulces",
+                category: "sweetness"
+            },
+            {
+                question: "¿Te atraen los olores florales?",
+                leftLabel: "Nada",
+                rightLabel: "Muchísimo",
+                category: "floral"
+            },
+            {
+                question: "¿Qué tan cálidos te gustan los aromas?",
+                leftLabel: "Muy fríos/frescos",
+                rightLabel: "Muy cálidos",
+                category: "warmth"
+            },
+            {
+                question: "¿Prefieres algo ligero o intenso?",
+                leftLabel: "Muy ligero",
+                rightLabel: "Muy intenso",
+                category: "intensity"
+            },
+            {
+                question: "¿Te gustan los aromas cítricos frescos (limón, bergamota)?",
+                leftLabel: "Nada",
+                rightLabel: "Muchísimo",
+                category: "citrus"
+            },
+            {
+                question: "¿Prefieres aromas tradicionales o modernos?",
+                leftLabel: "Clásicos",
+                rightLabel: "Vanguardistas",
+                category: "style"
+            },
+            {
+                question: "¿Te atraen los olores amaderados?",
+                leftLabel: "Nada",
+                rightLabel: "Muchísimo",
+                category: "woody"
+            },
+            {
+                question: "¿Qué tan romántica/o eres?",
+                leftLabel: "Nada romántico",
+                rightLabel: "Muy romántico",
+                category: "personality"
+            },
+            {
+                question: "¿Te gustan los aromas especiados (pimienta, cardamomo, jengibre)?",
+                leftLabel: "Nada",
+                rightLabel: "Muchísimo",
+                category: "spicy"
+            },
+            {
+                question: "¿Te gustan aromas dulces y gourmand (vainilla, café, canela)?",
+                leftLabel: "Nada",
+                rightLabel: "Muchísimo",
+                category: "gourmand"
+            },
+            {
+                question: "¿Qué tan aventurera/o te consideras?",
+                leftLabel: "Muy conservador",
+                rightLabel: "Muy aventurero",
+                category: "personality"
+            },
+            {
+                question: "¿Te gustan los aromas herbales (romero, tomillo, hierbabuena)?",
+                leftLabel: "Nada",
+                rightLabel: "Muchísimo",
+                category: "green"
+            },
+            {
+                question: "¿Prefieres aromas sutiles o que dejen huella?",
+                leftLabel: "Muy sutiles",
+                rightLabel: "Mucha estela",
+                category: "sillage"
+            },
+            {
+                question: "¿Te atraen aromas amaderados profundos (pino, cedro, palosanto)?",
+                leftLabel: "Nada",
+                rightLabel: "Muchísimo",
+                category: "musky"
+            },
+            {
+                question: "¿Qué tan elegante/sofisticado es tu estilo?",
+                leftLabel: "Casual y simple",
+                rightLabel: "Muy elegante",
+                category: "personality"
+            },
+            {
+                question: "¿Te gustan los aromas refrescantes y ligeros?",
+                leftLabel: "Nada",
+                rightLabel: "Muchísimo",
+                category: "aquatic"
+            },
+            {
+                question: "¿Cuál será el uso principal de tu perfume?",
+                category: "usage",
+                isMultipleChoice: true,
+                options: [
+                    { value: "daily", label: "Uso diario / Trabajo", icon: "💼" },
+                    { value: "evening", label: "Eventos nocturnos", icon: "🌙" },
+                    { value: "romantic", label: "Citas románticas", icon: "💕" },
+                    { value: "sport", label: "Deporte / Actividades", icon: "⚡" },
+                    { value: "special", label: "Ocasiones especiales", icon: "✨" },
+                    { value: "casual", label: "Salidas casuales", icon: "👔" }
+                ]
+            },
+            {
+                question: "¿Cuántas esencias quieres en tu perfume?",
+                leftLabel: "3 esencias",
+                rightLabel: "6 esencias",
+                category: "essences",
+                isEssences: true,
+                prices: {
+                    3: "19€",
+                    4: "22€", 
+                    5: "25€",
+                    6: "28€"
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = [];
+
+        function renderQuestion() {
+            const container = document.getElementById('questionContainer');
+            const q = questions[currentQuestion];
+            
+            if (q.isGender && q.isThreeOption) {
+                container.innerHTML = `
+                    <div class="question-card">
+                        <div class="question-number">Pregunta ${currentQuestion + 1} de ${questions.length}</div>
+                        <div class="question-text">${q.question}</div>
+                        <div class="gender-selector">
+                            ${q.options.map((option, index) => `
+                                <div class="gender-option ${answers[currentQuestion] === index ? 'active' : ''}" 
+                                     onclick="selectGender(${index})" data-value="${index}">
+                                    ${option === 'Mujer' ? '👩' : option === 'Hombre' ? '👨' : '🌈'}<br>
+                                    ${option}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="nav-buttons">
+                            <button class="btn btn-secondary" onclick="previousQuestion()" 
+                                    ${currentQuestion === 0 ? 'disabled' : ''}>
+                                ← Anterior
+                            </button>
+                            <button class="btn btn-primary" onclick="nextQuestion()">
+                                Siguiente →
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (q.isMultipleChoice) {
+                const selectedOptions = answers[currentQuestion] || [];
+                container.innerHTML = `
+                    <div class="question-card">
+                        <div class="question-number">Pregunta ${currentQuestion + 1} de ${questions.length}</div>
+                        <div class="question-text">${q.question}</div>
+                        <div class="usage-grid">
+                            ${q.options.map((option, index) => `
+                                <div class="usage-option ${selectedOptions.includes(option.value) ? 'selected' : ''}" 
+                                     onclick="toggleUsageOption('${option.value}')" data-value="${option.value}">
+                                    <div class="icon">${option.icon}</div>
+                                    <div class="label">${option.label}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="nav-buttons">
+                            <button class="btn btn-secondary" onclick="previousQuestion()" 
+                                    ${currentQuestion === 0 ? 'disabled' : ''}>
+                                ← Anterior
+                            </button>
+                            <button class="btn btn-primary" onclick="nextQuestion()">
+                                Siguiente →
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (q.isEssences) {
+                container.innerHTML = `
+                    <div class="question-card">
+                        <div class="question-number">Pregunta ${currentQuestion + 1} de ${questions.length}</div>
+                        <div class="question-text">${q.question}</div>
+                        <div class="slider-container">
+                            <div class="slider-labels">
+                                <span>${q.leftLabel}</span>
+                                <span>${q.rightLabel}</span>
+                            </div>
+                            <input type="range" min="3" max="6" value="${answers[currentQuestion] || 3}" 
+                                   class="slider" id="questionSlider">
+                            <div class="slider-value" id="sliderValue">${answers[currentQuestion] || 3} esencias</div>
+                            <div class="price-display" id="priceDisplay">${q.prices[answers[currentQuestion] || 3]}</div>
+                        </div>
+                        <div class="nav-buttons">
+                            <button class="btn btn-secondary" onclick="previousQuestion()" 
+                                    ${currentQuestion === 0 ? 'disabled' : ''}>
+                                ← Anterior
+                            </button>
+                            <button class="btn btn-primary" onclick="nextQuestion()">
+                                Ver Resultado
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                const slider = document.getElementById('questionSlider');
+                const valueDisplay = document.getElementById('sliderValue');
+                const priceDisplay = document.getElementById('priceDisplay');
+                
+                slider.addEventListener('input', function() {
+                    const essenceCount = parseInt(this.value);
+                    valueDisplay.textContent = essenceCount + ' esencias';
+                    priceDisplay.textContent = q.prices[essenceCount];
+                    answers[currentQuestion] = essenceCount;
+                });
+            } else {
+                container.innerHTML = `
+                    <div class="question-card">
+                        <div class="question-number">Pregunta ${currentQuestion + 1} de ${questions.length}</div>
+                        <div class="question-text">${q.question}</div>
+                        <div class="slider-container">
+                            <div class="slider-labels">
+                                <span>${q.leftLabel}</span>
+                                <span>${q.rightLabel}</span>
+                            </div>
+                            <input type="range" min="0" max="5" value="${answers[currentQuestion] || 2}" 
+                                   class="slider" id="questionSlider">
+                            <div class="slider-value" id="sliderValue">${answers[currentQuestion] || 2}</div>
+                        </div>
+                        <div class="nav-buttons">
+                            <button class="btn btn-secondary" onclick="previousQuestion()" 
+                                    ${currentQuestion === 0 ? 'disabled' : ''}>
+                                ← Anterior
+                            </button>
+                            <button class="btn btn-primary" onclick="nextQuestion()">
+                                ${currentQuestion === questions.length - 1 ? 'Ver Resultado' : 'Siguiente →'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                const slider = document.getElementById('questionSlider');
+                const valueDisplay = document.getElementById('sliderValue');
+                
+                slider.addEventListener('input', function() {
+                    valueDisplay.textContent = this.value;
+                    answers[currentQuestion] = parseInt(this.value);
+                });
+            }
+
+            updateProgress();
+        }
+
+        function toggleUsageOption(value) {
+            if (!answers[currentQuestion]) {
+                answers[currentQuestion] = [];
+            }
+            
+            const index = answers[currentQuestion].indexOf(value);
+            if (index > -1) {
+                answers[currentQuestion].splice(index, 1);
+            } else {
+                answers[currentQuestion].push(value);
+            }
+            
+            // Actualizar visual
+            document.querySelectorAll('.usage-option').forEach(option => {
+                if (option.dataset.value === value) {
+                    option.classList.toggle('selected');
+                }
+            });
+        }
+
+        function selectGender(value) {
+            answers[currentQuestion] = value;
+            
+            // Aplicar tema visual
+            const body = document.body;
+            body.classList.remove('theme-feminine', 'theme-masculine', 'theme-neutral');
+            
+            const titleElement = document.getElementById('appTitle');
+            
+            if (value === 0) {
+                body.classList.add('theme-feminine');
+                titleElement.textContent = '💐 Creador de Perfume Personalizado';
+            } else if (value === 2) {
+                body.classList.add('theme-masculine');
+                titleElement.textContent = '🎩 Creador de Perfume Personalizado';
+            } else {
+                body.classList.add('theme-neutral');
+                titleElement.textContent = '✨ Creador de Perfume Personalizado';
+            }
+            
+            // Actualizar botones
+            document.querySelectorAll('.gender-option').forEach((btn, index) => {
+                if (index === value) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function nextQuestion() {
+            if (answers[currentQuestion] === undefined) {
+                const q = questions[currentQuestion];
+                if (q.isMultipleChoice) {
+                    answers[currentQuestion] = [];
+                } else {
+                    answers[currentQuestion] = 2;
+                }
+            }
+
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            } else {
+                calculateResult();
+            }
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+            }
+        }
+
+        function calculateResult() {
+            const scores = {
+                floral: 0,
+                citrus: 0,
+                woody: 0,
+                spicy: 0,
+                gourmand: 0,
+                green: 0,
+                musky: 0,
+                aquatic: 0,
+                sweetness: 0,
+                intensity: 0,
+                warmth: 0
+            };
+
+            questions.forEach((q, index) => {
+                const value = answers[index];
+                if (scores.hasOwnProperty(q.category)) {
+                    scores[q.category] += value;
+                }
+            });
+
+            const personalityScore = answers.filter((_, i) => 
+                questions[i].category === 'personality'
+            ).reduce((sum, val) => sum + val, 0);
+
+            const adventurousness = answers[14];
+            const elegance = answers[18];
+            const extroversion = answers[0];
+
+            let perfumeProfile = generatePerfumeProfile(scores, personalityScore, adventurousness, elegance, extroversion);
+            
+            displayResults(perfumeProfile, scores);
+        }
+
+        function generatePerfumeProfile(scores, personalityScore, adventurousness, elegance, extroversion) {
+            const gender = answers[0];
+            const essenceCount = answers[answers.length - 1] || 3;
+            const isMale = gender === 2;
+            const isFeminine = gender === 0;
+            
+            let topNote = "";
+            let middleNote = "";
+            let baseNote = "";
+            let perfumeName = "";
+            let personalityType = "";
+            let description = "";
+
+            // NOTA DE SALIDA (Top Note)
+            if (scores.citrus >= 4) {
+                topNote = "Bergamota";
+            } else if (scores.green >= 3) {
+                topNote = isMale ? "Hierbabuena" : "Romero";
+            } else if (scores.citrus >= 2) {
+                topNote = "Limón";
+            } else {
+                topNote = isMale ? "Tomillo" : "Hierba Luisa";
+            }
+
+            // NOTA DE CORAZÓN (Middle Note)
+            if (scores.spicy >= 4) {
+                middleNote = "Pimienta";
+            } else if (scores.spicy >= 3) {
+                middleNote = isMale ? "Cardamomo" : "Nuez Moscada";
+            } else if (scores.gourmand >= 4) {
+                middleNote = isMale ? "Café" : "Manzana";
+            } else if (scores.gourmand >= 2) {
+                middleNote = isMale ? "Clavo de Olor" : "Canela";
+            } else {
+                middleNote = isMale ? "Jengibre" : "Manzana";
+            }
+
+            // NOTA DE FONDO (Base Note)
+            if (scores.woody >= 4) {
+                baseNote = isMale ? "Madera de Pino" : "Arbusto de Cedro";
+            } else if (scores.warmth >= 4) {
+                baseNote = isMale ? "Palosanto" : "Vainilla";
+            } else if (scores.gourmand >= 3) {
+                baseNote = "Vainilla";
+            } else if (scores.woody >= 2) {
+                baseNote = isMale ? "Resina de Pino" : "Arbusto de Cedro";
+            } else {
+                baseNote = isMale ? "Hoja de Pino" : "Vainilla";
+            }
+
+            if (extroversion >= 4 && scores.intensity >= 4) {
+                personalityType = "Personalidad Audaz y Carismática";
+                perfumeName = "AURA MAGNÉTICA";
+                description = "Tu perfume es intenso y memorable, con una estela poderosa que refleja tu naturaleza extrovertida y tu deseo de dejar huella. Combina notas ricas y sensuales que capturan la atención.";
+            } else if (elegance >= 4 && scores.floral >= 3) {
+                personalityType = "Personalidad Elegante y Sofisticada";
+                perfumeName = "ELEGANCIA ATEMPORAL";
+                description = "Un perfume refinado y clásico que refleja tu buen gusto. Notas florales delicadas combinadas con maderas nobles crean una fragancia distinguida y memorable.";
+            } else if (adventurousness >= 4) {
+                personalityType = "Personalidad Aventurera y Libre";
+                perfumeName = "ESPÍRITU SALVAJE";
+                description = "Tu perfume es vibrante y único, con combinaciones inesperadas que reflejan tu naturaleza exploradora. Fresco, dinámico y lleno de energía.";
+            } else if (scores.gourmand >= 4 && scores.sweetness >= 3) {
+                personalityType = "Personalidad Dulce y Acogedora";
+                perfumeName = "DULCE SEDUCCIÓN";
+                description = "Un perfume cálido y envolvente con notas gourmand que evocan comodidad y ternura. Perfecto para tu naturaleza cariñosa y empática.";
+            } else if (scores.citrus >= 4 && scores.intensity <= 2) {
+                personalityType = "Personalidad Fresca y Optimista";
+                perfumeName = "BRISA LUMINOSA";
+                description = "Tu perfume es ligero, fresco y revitalizante. Notas cítricas brillantes que reflejan tu energía positiva y tu amor por la simplicidad elegante.";
+            } else if (scores.woody >= 4 && scores.warmth >= 3) {
+                personalityType = "Personalidad Terrenal y Auténtica";
+                perfumeName = "BOSQUE MÍSTICO";
+                description = "Un perfume profundo y natural con maderas cálidas que reflejan tu autenticidad y tu conexión con la naturaleza. Confiable y reconfortante.";
+            } else if (scores.musky >= 4) {
+                personalityType = "Personalidad Sensual y Misteriosa";
+                perfumeName = "ENIGMA SEDUCTOR";
+                description = "Tu perfume es suave, íntimo y envolvente. Notas almizcladas que crean un aura de misterio y sensualidad sutil pero inolvidable.";
+            } else {
+                personalityType = "Personalidad Equilibrada y Versátil";
+                perfumeName = "ARMONÍA ESENCIAL";
+                description = "Un perfume perfectamente balanceado que combina frescura, calidez y elegancia. Refleja tu naturaleza adaptable y tu buen gusto universal.";
+            }
+
+            // Generar esencias adicionales según la cantidad seleccionada
+            let allEssences = [topNote, middleNote, baseNote];
+            
+            if (essenceCount > 3) {
+                const additionalEssences = generateAdditionalEssences(scores, essenceCount - 3, isMale, isFeminine);
+                allEssences = allEssences.concat(additionalEssences);
+            }
+
+            return {
+                name: perfumeName,
+                personalityType: personalityType,
+                description: description,
+                essences: allEssences,
+                essenceCount: essenceCount,
+                price: questions[questions.length - 1].prices[essenceCount],
+                gender: isMale ? "Masculino" : isFeminine ? "Femenino" : "Unisex",
+                intensity: scores.intensity >= 3 ? "Alta" : scores.intensity >= 2 ? "Media" : "Ligera",
+                longevity: scores.intensity + scores.warmth >= 6 ? "8-12 horas" : "4-6 horas"
+            };
+        }
+
+        function generateAdditionalEssences(scores, additionalCount, isMale, isFeminine) {
+            const essencePool = [];
+            
+            // Banco de esencias adicionales según preferencias (solo aromas disponibles)
+            if (scores.citrus >= 3) {
+                essencePool.push("Limón", "Bergamota", "Hierba Luisa");
+            }
+            if (scores.woody >= 3) {
+                essencePool.push("Madera de Pino", "Arbusto de Cedro", "Hoja de Pino", "Resina de Pino");
+            }
+            if (scores.spicy >= 3) {
+                essencePool.push("Jengibre", "Clavo de Olor", "Nuez Moscada", "Pimienta", "Cardamomo");
+            }
+            if (scores.gourmand >= 3) {
+                essencePool.push("Café", "Vainilla", "Canela", "Manzana");
+            }
+            if (scores.green >= 3) {
+                essencePool.push("Romero", "Hierbabuena", "Tomillo");
+            }
+            if (scores.warmth >= 3) {
+                essencePool.push("Palosanto", "Vainilla", "Canela");
+            }
+            
+            // Si no hay suficientes, añadir esencias neutras disponibles
+            if (essencePool.length < additionalCount) {
+                const neutralEssences = ["Bergamota", "Limón", "Jengibre", "Arbusto de Cedro", "Manzana"];
+                essencePool.push(...neutralEssences);
+            }
+            
+            // Seleccionar las esencias adicionales evitando duplicados
+            const selected = [];
+            const shuffled = essencePool.sort(() => 0.5 - Math.random());
+            
+            for (let i = 0; i < Math.min(additionalCount, shuffled.length); i++) {
+                selected.push(shuffled[i]);
+            }
+            
+            return selected;
+        }
+
+        function displayResults(profile, scores) {
+            document.getElementById('questionContainer').style.display = 'none';
+            const resultsContainer = document.getElementById('results');
+            
+            resultsContainer.innerHTML = `
+                <div class="result-card">
+                    <div class="result-title">✨ Tu Perfume Personalizado ✨</div>
+                    <div class="perfume-name">${profile.name}</div>
+                    
+                    <div class="personality-match">
+                        <h3>${profile.personalityType}</h3>
+                        <div class="description">${profile.description}</div>
+                        <div class="description"><strong>Tipo:</strong> ${profile.gender} | <strong>Intensidad:</strong> ${profile.intensity} | <strong>Duración:</strong> ${profile.longevity}</div>
+                    </div>
+
+                    <div class="notes-section">
+                        <div class="notes-title">🧪 Tu Fórmula Personalizada (${profile.essenceCount} Esencias) - ${profile.price}</div>
+                        <div style="text-align: center; margin: 30px 0;">
+                            <div style="font-size: 18px; color: var(--color-text-secondary); margin-bottom: 20px;">
+                                La combinación perfecta para tu perfil único
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; justify-content: center;">
+                                ${profile.essences.map((essence, index) => {
+                                    let category = "✨ EXTRA";
+                                    let description = "Nota única";
+                                    
+                                    if (index === 0) {
+                                        category = "🌟 SALIDA";
+                                        description = "Primera impresión";
+                                    } else if (index === 1) {
+                                        category = "💐 CORAZÓN";
+                                        description = "Carácter principal";
+                                    } else if (index === 2) {
+                                        category = "🌲 FONDO";
+                                        description = "Duración y profundidad";
+                                    }
+                                    
+                                    return `
+                                        <div style="background: rgba(var(--color-teal-500-rgb), 0.1); padding: 16px; border-radius: 12px; border: 2px solid var(--color-primary);">
+                                            <div style="font-size: 12px; color: var(--color-primary); font-weight: 600; margin-bottom: 6px;">${category}</div>
+                                            <div style="font-size: 16px; font-weight: 700; color: var(--color-text);">${essence}</div>
+                                            <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 6px;">${description}</div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="personality-match">
+                        <h3>💡 Recomendaciones de uso</h3>
+                        <div class="description">
+                            ${getUsageRecommendations(scores)}
+                        </div>
+                        ${getUserSelectedUsages()}
+                    </div>
+
+                    <div id="emailFormContainer" style="margin-top: 25px; padding: 20px; background: var(--color-surface); border-radius: 12px; border: 1px solid var(--color-border); display: none;">
+                        <h3 style="margin-bottom: 15px; color: var(--color-primary); font-size: 16px;">📧 Recibir resultados por email</h3>
+                        <form action="https://formsubmit.co/bateriarnau@gmail.com" method="POST" id="emailForm">
+                            <!-- Campos ocultos -->
+                            <input type="hidden" name="_subject" value="Resultado de tu Perfume Personalizado">
+                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="_template" value="table">
+                            <input type="hidden" name="_next" value="https://tudominio.com/gracias.html">
+                            <input type="hidden" name="resultados_encuesta" id="surveyResults">
+
+                            <!-- Campo de email visible -->
+                            <div style="margin-bottom: 12px;">
+                                <label for="userEmail" style="display: block; margin-bottom: 6px; font-weight: 500; color: var(--color-text);">Tu correo electrónico:</label>
+                                <input type="email" id="userEmail" name="email" placeholder="tu@email.com" required style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 6px; font-family: inherit; font-size: 14px; background: var(--color-surface);">
+                            </div>
+
+                            <!-- Botón enviar -->
+                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Enviar resultados a mi email</button>
+                        </form>
+                    </div>
+
+                    <div class="nav-buttons" style="margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="resetQuiz()">Crear Otro Perfume</button>
+                    </div>
+                </div>
+            `;
+            
+            resultsContainer.classList.add('active');
+
+            // Preparar datos de la encuesta para enviar
+            const surveyDataText = document.getElementById('results').innerText;
+            document.getElementById('surveyResults').value = surveyDataText;
+
+            // Mostrar formulario de email
+            document.getElementById('emailFormContainer').style.display = 'block';
+            
+            window.scrollTo(0, 0);
+        }
+
+        function getUserSelectedUsages() {
+            const usageQuestion = questions.find(q => q.isMultipleChoice);
+            const usageIndex = questions.indexOf(usageQuestion);
+            const selectedUsages = answers[usageIndex] || [];
+            
+            if (selectedUsages.length === 0) return '';
+            
+            const usageLabels = selectedUsages.map(value => {
+                const option = usageQuestion.options.find(opt => opt.value === value);
+                return option ? `${option.icon} ${option.label}` : '';
+            }).filter(Boolean);
+            
+            return `
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--color-border);">
+                    <strong>Usos seleccionados por ti:</strong><br>
+                    ${usageLabels.join(' • ')}
+                </div>
+            `;
+        }
+
+        function getUsageRecommendations(scores) {
+            let recommendations = [];
+            
+            if (scores.intensity >= 4) {
+                recommendations.push("Perfecto para eventos nocturnos y ocasiones especiales.");
+            } else if (scores.intensity <= 2) {
+                recommendations.push("Ideal para uso diario y ambiente de trabajo.");
+            }
+            
+            if (scores.warmth >= 4) {
+                recommendations.push("Mejor para otoño e invierno.");
+            } else if (scores.citrus >= 4 || scores.aquatic >= 3) {
+                recommendations.push("Perfecto para primavera y verano.");
+            }
+            
+            if (scores.citrus >= 3) {
+                recommendations.push("Excelente para la mañana y actividades al aire libre.");
+            }
+            
+            if (scores.musky >= 4 || scores.gourmand >= 4) {
+                recommendations.push("Ideal para la tarde-noche y citas románticas.");
+            }
+
+            return recommendations.join(' ');
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            answers = [];
+            document.getElementById('questionContainer').style.display = 'block';
+            document.getElementById('results').classList.remove('active');
+            
+            // Limpiar tema visual
+            document.body.classList.remove('theme-feminine', 'theme-masculine', 'theme-neutral');
+            document.getElementById('appTitle').textContent = '🌸 Creador de Perfume Personalizado';
+            
+            renderQuestion();
+        }
+
+        renderQuestion();
+    </script>
+</body>
+</html>
