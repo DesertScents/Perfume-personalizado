@@ -881,41 +881,511 @@
             let description = "";
 
             // NOTA DE SALIDA (Top Note)
+
             if (scores.citrus >= 4) {
-                topNote = "Bergamota";
-            } else if (scores.green >= 3) {
-                topNote = isMale ? "Hierbabuena" : "Romero";
-            } else if (scores.citrus >= 2) {
-                topNote = "Limón";
-            } else {
-                topNote = isMale ? "Tomillo" : "Hierba Luisa";
-            }
+    // CÍTRICOS MUY MARCADOS
+    const strongCitrusTopNotes = [
+        "Bergamota",
+        "Limón",
+        "Naranja",
+        "Mandarina",
+        "Pomelo",
+        "Lima",
+        "Yuzu",
+        "Toronja",
+        "Limón de Amalfi",
+        "Petitgrain",
+        "Neroli",
+        "Flor de naranjo"
+    ];
+    topNote = strongCitrusTopNotes[Math.floor(Math.random() * strongCitrusTopNotes.length)];
+} else if (scores.green >= 3) {
+    // VERDES / HERBALES MARCADOS
+    const greenTopNotesMale = [
+        "Hierbabuena",
+        "Menta",
+        "Romero ligero",
+        "Albahaca fresca",
+        "Té verde",
+        "Manzana verde"
+    ];
+    const greenTopNotesFemale = [
+        "Romero ligero",
+        "Albahaca fresca",
+        "Té verde",
+        "Manzana verde",
+        "Pera"
+    ];
+    const pool = isMale ? greenTopNotesMale : greenTopNotesFemale;
+    topNote = pool[Math.floor(Math.random() * pool.length)];
+} else if (scores.citrus >= 2) {
+    // CÍTRICOS MODERADOS / FRUTAS FRESCAS
+    const moderateCitrusTopNotes = [
+        "Limón",
+        "Naranja",
+        "Mandarina",
+        "Pomelo",
+        "Lima",
+        "Yuzu",
+        "Toronja",
+        "Menta",
+        "Lavanda suave",
+        "Frutos rojos ligeros",
+        "Cereza ligera",
+        "Frambuesa fresca",
+        "Fresa",
+        "Melocotón",
+        "Durazno"
+    ];
+    topNote = moderateCitrusTopNotes[Math.floor(Math.random() * moderateCitrusTopNotes.length)];
+} else {
+    // FRESCO AROMÁTICO / ACUÁTICO / ESPECIADO LIGERO
+    const freshAromaticTopNotesMale = [
+        "Tomillo",
+        "Hierbabuena",
+        "Cardamomo",
+        "Canela ligera",
+        "Pimienta rosa",
+        "Jengibre ligero",
+        "Calone",
+        "Notas de ozono",
+        "Brisa marina",
+        "Agua de lluvia",
+        "Acordes acuáticos",
+        "Pepino acuático"
+    ];
+    const freshAromaticTopNotesFemale = [
+        "Hierba Luisa",
+        "Romero ligero",
+        "Lavanda suave",
+        "Cardamomo",
+        "Canela ligera",
+        "Pimienta rosa",
+        "Jengibre ligero",
+        "Calone",
+        "Notas de ozono",
+        "Brisa marina",
+        "Agua de lluvia",
+        "Acordes acuáticos",
+        "Pepino acuático"
+    ];
+    const pool = isMale ? freshAromaticTopNotesMale : freshAromaticTopNotesFemale;
+    topNote = pool[Math.floor(Math.random() * pool.length)];
+}
+
 
             // NOTA DE CORAZÓN (Middle Note)
-            if (scores.spicy >= 4) {
-                middleNote = "Pimienta";
-            } else if (scores.spicy >= 3) {
-                middleNote = isMale ? "Cardamomo" : "Nuez Moscada";
-            } else if (scores.gourmand >= 4) {
-                middleNote = isMale ? "Café" : "Manzana";
-            } else if (scores.gourmand >= 2) {
-                middleNote = isMale ? "Clavo de Olor" : "Canela";
-            } else {
-                middleNote = isMale ? "Jengibre" : "Manzana";
-            }
+if (scores.spicy >= 4) {
+    // ESPECIAS MUY MARCADAS
+    const strongSpicyMiddleNotes = [
+        "Pimienta",
+        "Cardamomo",
+        "Clavo",
+        "Nuez Moscada",
+        "Comino",
+        "Canela",
+        "Jengibre",
+        "Anís",
+        "Coriandro",
+        "Cilantro"
+    ];
+    middleNote = strongSpicyMiddleNotes[Math.floor(Math.random() * strongSpicyMiddleNotes.length)];
+} else if (scores.spicy >= 3) {
+    // ESPECIAS MODERADAS
+    const moderateSpicyMiddleNotesMale = [
+        "Cardamomo",
+        "Pimienta",
+        "Clavo",
+        "Canela",
+        "Comino",
+        "Anís",
+        "Coriandro",
+        "Cilantro",
+        "Jengibre"
+    ];
+    const moderateSpicyMiddleNotesFemale = [
+        "Nuez Moscada",
+        "Canela",
+        "Cardamomo",
+        "Pimienta",
+        "Clavo",
+        "Anís",
+        "Coriandro",
+        "Cilantro"
+    ];
+    const pool = isMale ? moderateSpicyMiddleNotesMale : moderateSpicyMiddleNotesFemale;
+    middleNote = pool[Math.floor(Math.random() * pool.length)];
+} else if (scores.gourmand >= 4) {
+    // GOURMAND MUY MARCADO
+    const strongGourmandMiddleNotesMale = [
+        "Café",
+        "Cacao",
+        "Chocolate",
+        "Caramelo",
+        "Miel",
+        "Almendras",
+        "Frutos secos"
+    ];
+    const strongGourmandMiddleNotesFemale = [
+        "Manzana",
+        "Melocotón",
+        "Durazno",
+        "Ciruela",
+        "Cereza negra",
+        "Frambuesa",
+        "Albaricoque",
+        "Lichi",
+        "Mango",
+        "Piña",
+        "Papaya"
+    ];
+    const pool = isMale ? strongGourmandMiddleNotesMale : strongGourmandMiddleNotesFemale;
+    middleNote = pool[Math.floor(Math.random() * pool.length)];
+} else if (scores.gourmand >= 2) {
+    // GOURMAND MODERADO
+    const moderateGourmandMiddleNotesMale = [
+        "Clavo de Olor",
+        "Canela",
+        "Jengibre",
+        "Cardamomo",
+        "Café",
+        "Cacao",
+        "Chocolate"
+    ];
+    const moderateGourmandMiddleNotesFemale = [
+        "Canela",
+        "Nuez Moscada",
+        "Manzana",
+        "Melocotón",
+        "Durazno",
+        "Ciruela",
+        "Cereza negra",
+        "Frambuesa",
+        "Albaricoque",
+        "Lichi"
+    ];
+    const pool = isMale ? moderateGourmandMiddleNotesMale : moderateGourmandMiddleNotesFemale;
+    middleNote = pool[Math.floor(Math.random() * pool.length)];
+} else {
+    // FLORAL / VERDE / AROMÁTICO POR DEFECTO
+    const defaultMiddleNotesMale = [
+        "Jengibre",
+        "Cardamomo",
+        "Comino",
+        "Romero",
+        "Albahaca",
+        "Tomillo",
+        "Menta",
+        "Té verde",
+        "Gálbano",
+        "Hierba cortada",
+        "Hojas de violeta",
+        "Trébol",
+        "Pasto",
+        "Notas verdes de plantas"
+    ];
+    const defaultMiddleNotesFemale = [
+        "Manzana",
+        "Rosa",
+        "Jazmín",
+        "Neroli",
+        "Nardo (tuberosa)",
+        "Lirio (azucena)",
+        "Iris",
+        "Mimosa",
+        "Ylang-ylang",
+        "Violeta",
+        "Geranio",
+        "Peonía",
+        "Magnolia",
+        "Osmanthus",
+        "Champaca",
+        "Gardenia",
+        "Camelia",
+        "Clavel",
+        "Flor de loto",
+        "Orquídea",
+        "Dalia",
+        "Lila",
+        "Narciso",
+        "Anémona",
+        "Fresia",
+        "Jacinto",
+        "Lirio de los valles (muguete)",
+        "Azalea",
+        "Pétalo de cerezo",
+        "Cala",
+        "Amarilis",
+        "Melocotón",
+        "Durazno",
+        "Ciruela",
+        "Cereza negra",
+        "Frambuesa",
+        "Albaricoque",
+        "Lichi",
+        "Mango",
+        "Piña",
+        "Papaya",
+        "Té verde",
+        "Gálbano",
+        "Hierba cortada",
+        "Hojas de violeta",
+        "Salvia",
+        "Romero",
+        "Albahaca",
+        "Tomillo",
+        "Menta"
+    ];
+    const pool = isMale ? defaultMiddleNotesMale : defaultMiddleNotesFemale;
+    middleNote = pool[Math.floor(Math.random() * pool.length)];
+}
+
 
             // NOTA DE FONDO (Base Note)
-            if (scores.woody >= 4) {
-                baseNote = isMale ? "Madera de Pino" : "Arbusto de Cedro";
-            } else if (scores.warmth >= 4) {
-                baseNote = isMale ? "Palosanto" : "Vainilla";
-            } else if (scores.gourmand >= 3) {
-                baseNote = "Vainilla";
-            } else if (scores.woody >= 2) {
-                baseNote = isMale ? "Resina de Pino" : "Arbusto de Cedro";
-            } else {
-                baseNote = isMale ? "Hoja de Pino" : "Vainilla";
-            }
+if (scores.woody >= 4) {
+    // MADERA MUY MARCADA
+    const strongWoodyBaseNotesMale = [
+        "Madera de Pino",
+        "Sándalo",
+        "Cedro",
+        "Enebro",
+        "Abedul",
+        "Palisandro",
+        "Jacaranda",
+        "Vetiver",
+        "Pachulí",
+        "Oud (madera de aquilaria)",
+        "Madera quemada",
+        "Madera seca"
+    ];
+    const strongWoodyBaseNotesFemale = [
+        "Arbusto de Cedro",
+        "Sándalo",
+        "Cedro",
+        "Enebro",
+        "Abedul",
+        "Palisandro",
+        "Jacaranda",
+        "Vetiver",
+        "Pachulí",
+        "Oud (madera de aquilaria)",
+        "Madera quemada",
+        "Madera seca"
+    ];
+    const pool = isMale ? strongWoodyBaseNotesMale : strongWoodyBaseNotesFemale;
+    baseNote = pool[Math.floor(Math.random() * pool.length)];
+} else if (scores.warmth >= 4) {
+    // CALIDEZ / ORIENTAL MUY MARCADA
+    const strongWarmthBaseNotesMale = [
+        "Palosanto",
+        "Ámbar",
+        "Ámbar gris",
+        "Ámbar blanco",
+        "Vainilla (Madagascar)",
+        "Haba tonka",
+        "Resinas",
+        "Almizcles sintéticos modernos",
+        "Almizcles blancos",
+        "Ambroxan",
+        "Benjuí",
+        "Incienso",
+        "Mirra",
+        "Bálsamo de Tolú",
+        "Tabaco curado",
+        "Chocolate",
+        "Cacao",
+        "Café",
+        "Miel",
+        "Praliné",
+        "Toffee",
+        "Almendras",
+        "Frutos secos",
+        "Tostados",
+        "Algodón de azúcar",
+        "Malvavisco",
+        "Regaliz"
+    ];
+    const strongWarmthBaseNotesFemale = [
+        "Vainilla",
+        "Ámbar",
+        "Ámbar gris",
+        "Ámbar blanco",
+        "Vainilla (Madagascar)",
+        "Haba tonka",
+        "Resinas",
+        "Almizcles sintéticos modernos",
+        "Almizcles blancos",
+        "Ambroxan",
+        "Benjuí",
+        "Incienso",
+        "Mirra",
+        "Bálsamo de Tolú",
+        "Tabaco curado",
+        "Chocolate",
+        "Cacao",
+        "Café",
+        "Miel",
+        "Praliné",
+        "Toffee",
+        "Almendras",
+        "Frutos secos",
+        "Tostados",
+        "Algodón de azúcar",
+        "Malvavisco",
+        "Regaliz"
+    ];
+    const pool = isMale ? strongWarmthBaseNotesMale : strongWarmthBaseNotesFemale;
+    baseNote = pool[Math.floor(Math.random() * pool.length)];
+} else if (scores.gourmand >= 3) {
+    // GOURMAND MUY MARCADO
+    const gourmandBaseNotes = [
+        "Vainilla",
+        "Vainilla (Madagascar)",
+        "Haba tonka",
+        "Caramelo",
+        "Chocolate",
+        "Cacao",
+        "Café",
+        "Miel",
+        "Praliné",
+        "Toffee",
+        "Almendras",
+        "Frutos secos",
+        "Tostados",
+        "Algodón de azúcar",
+        "Malvavisco",
+        "Regaliz",
+        "Canela profunda",
+        "Cardamomo fondo",
+        "Clavo",
+        "Nuez moscada"
+    ];
+    baseNote = gourmandBaseNotes[Math.floor(Math.random() * gourmandBaseNotes.length)];
+} else if (scores.woody >= 2) {
+    // MADERA MODERADA
+    const moderateWoodyBaseNotesMale = [
+        "Resina de Pino",
+        "Madera de Pino",
+        "Sándalo",
+        "Cedro",
+        "Enebro",
+        "Abedul",
+        "Palisandro",
+        "Jacaranda",
+        "Vetiver",
+        "Pachulí",
+        "Oud (madera de aquilaria)",
+        "Madera quemada",
+        "Madera seca",
+        "Musgo de roble (liquen)",
+        "Hedera",
+        "Plantas terrosas",
+        "Gálbano"
+    ];
+    const moderateWoodyBaseNotesFemale = [
+        "Arbusto de Cedro",
+        "Sándalo",
+        "Cedro",
+        "Enebro",
+        "Abedul",
+        "Palisandro",
+        "Jacaranda",
+        "Vetiver",
+        "Pachulí",
+        "Oud (madera de aquilaria)",
+        "Madera quemada",
+        "Madera seca",
+        "Musgo de roble (liquen)",
+        "Hedera",
+        "Plantas terrosas",
+        "Gálbano"
+    ];
+    const pool = isMale ? moderateWoodyBaseNotesMale : moderateWoodyBaseNotesFemale;
+    baseNote = pool[Math.floor(Math.random() * pool.length)];
+} else {
+    // POR DEFECTO - COMBINACIÓN EQUILIBRADA
+    const defaultBaseNotesMale = [
+        "Hoja de Pino",
+        "Madera de Pino",
+        "Resina de Pino",
+        "Sándalo",
+        "Cedro",
+        "Vetiver",
+        "Pachulí",
+        "Musgo de roble (liquen)",
+        "Hedera",
+        "Vainilla",
+        "Vainilla (Madagascar)",
+        "Haba tonka",
+        "Ámbar",
+        "Ámbar blanco",
+        "Benjuí",
+        "Incienso",
+        "Mirra",
+        "Almizcles sintéticos modernos",
+        "Almizcles blancos",
+        "Ambroxan",
+        "Tabaco curado",
+        "Hoja de tabaco",
+        "Cuero",
+        "Cuero gamuza",
+        "Cuero ahumado",
+        "Cacao",
+        "Café",
+        "Miel",
+        "Praliné",
+        "Canela profunda",
+        "Cardamomo fondo",
+        "Clavo",
+        "Nuez moscada",
+        "Pimienta negra"
+    ];
+    const defaultBaseNotesFemale = [
+        "Vainilla",
+        "Vainilla (Madagascar)",
+        "Haba tonka",
+        "Arbusto de Cedro",
+        "Sándalo",
+        "Cedro",
+        "Vetiver",
+        "Pachulí",
+        "Ámbar",
+        "Ámbar gris",
+        "Ámbar blanco",
+        "Resinas",
+        "Benjuí",
+        "Incienso",
+        "Mirra",
+        "Bálsamo de Tolú",
+        "Gálbano",
+        "Elemi",
+        "Goma arábiga",
+        "Colofonia",
+        "Almizcles sintéticos modernos",
+        "Almizcles blancos",
+        "Ambroxan",
+        "Tabaco curado",
+        "Cuero",
+        "Cuero gamuza",
+        "Chocolate",
+        "Cacao",
+        "Café",
+        "Miel",
+        "Praliné",
+        "Toffee",
+        "Almendras",
+        "Frutos secos",
+        "Tostados",
+        "Algodón de azúcar",
+        "Malvavisco",
+        "Regaliz",
+        "Musgo de roble (liquen)",
+        "Hedera",
+        "Plantas terrosas"
+    ];
+    const pool = isMale ? defaultBaseNotesMale : defaultBaseNotesFemale;
+    baseNote = pool[Math.floor(Math.random() * pool.length)];
+}
 
             if (extroversion >= 4 && scores.intensity >= 4) {
                 personalityType = "Personalidad Audaz y Carismática";
