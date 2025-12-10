@@ -1539,26 +1539,39 @@ if (scores.woody >= 4) {
                         ${getUserSelectedUsages()}
                     </div>
 
-                <div id="emailFormContainer" style="margin-top: 25px; padding: 20px; background: var(--color-surface); border-radius: 12px; border: 1px solid var(--color-border);">
-    <h3 style="margin-bottom: 15px; color: var(--color-primary); font-size: 16px;">📧 Recibir resultados por email</h3>
+    <div id="emailFormContainer" style="margin-top: 25px; padding: 20px; background: var(--color-surface); border-radius: 12px; border: 1px solid var(--color-border);">
+  <h3 style="margin-bottom: 15px; color: var(--color-primary); font-size: 16px;">📧 Recibir resultados por email</h3>
 
-<form action="https://formsubmit.co/petaab9@gmail.com" method="POST">
-     <input type="text" name="name" required>
-     <input type="email" name="email" required>
-     <button type="submit">Send</button>
-</form>
+  <!-- ÚNICO FORMULARIO, con FormSubmit -->
+  <form action="https://formsubmit.co/petaab9@gmail.com" method="POST" id="emailForm">
+    <!-- (Opcional) nombre del usuario -->
+    <input type="hidden" name="name" id="userName">
 
+    <!-- Campo de email visible y bonito -->
+    <div style="margin-bottom: 12px;">
+      <label for="userEmail" style="display: block; margin-bottom: 6px; font-weight: 500; color: var(--color-text);">
+        Tu correo electrónico:
+      </label>
+      <input
+        type="email"
+        id="userEmail"
+        name="email"
+        placeholder="tu@email.com"
+        required
+        style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 6px; font-family: inherit; font-size: 14px; background: var(--color-surface);"
+      >
+    </div>
 
-        <!-- Campo de email visible -->
-        <div style="margin-bottom: 12px;">
-            <label for="userEmail" style="display: block; margin-bottom: 6px; font-weight: 500; color: var(--color-text);">Tu correo electrónico:</label>
-            <input type="email" id="userEmail" name="email" placeholder="tu@email.com" required style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 6px; font-family: inherit; font-size: 14px; background: var(--color-surface);">
-        </div>
-
-        <!-- Botón enviar -->
-        <button type="submit" style="width: 100%; margin-bottom: 10px; background-color: var(--color-primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer;">Enviar resultados a mi email</button>
-    </form>
+    <!-- Botón enviar bonito, DENTRO del form -->
+    <button
+      type="submit"
+      style="width: 100%; margin-bottom: 10px; background-color: var(--color-primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer;"
+    >
+      Enviar resultados a mi email
+    </button>
+  </form>
 </div>
+
 
 
                     <div class="nav-buttons" style="margin-top: 20px;">
