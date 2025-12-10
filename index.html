@@ -1669,5 +1669,28 @@ if (scores.woody >= 4) {
 
         renderQuestion();
     </script>
+    
+    <script>
+  // Rellenar el campo oculto con las esencias seleccionadas antes de enviar el formulario
+  const emailForm = document.getElementById('emailForm');
+
+  if (emailForm) {
+    emailForm.addEventListener('submit', function () {
+      // selectedNotes es el array donde guardas las esencias elegidas en el test
+      // (ya existe en tu código del quiz)
+      const esencias = Array.isArray(selectedNotes) ? selectedNotes : [];
+
+      // Convertimos las esencias en un texto legible
+      const resumenEsencias = esencias.join(', ');
+
+      // Lo guardamos en el input oculto para que FormSubmit lo envíe
+      const hiddenField = document.getElementById('esenciasSeleccionadas');
+      if (hiddenField) {
+        hiddenField.value = resumenEsencias;
+      }
+    });
+  }
+</script>
+
 </body>
 </html>
