@@ -1545,7 +1545,21 @@ if (scores.woody >= 4) {
   <!-- ÚNICO FORMULARIO, con FormSubmit -->
   <form action="https://formsubmit.co/petaab9@gmail.com" method="POST" id="emailForm">
     <!-- (Opcional) nombre del usuario -->
-    <input type="hidden" name="name" id="userName">
+    <!-- Campo de nombre visible y bonito -->
+<div style="margin-bottom: 12px;">
+  <label for="userName" style="display: block; margin-bottom: 6px; font-weight: 500; color: var(--color-text);">
+    Tu nombre:
+  </label>
+  <input
+    type="text"
+    id="userName"
+    name="name"
+    placeholder="Tu nombre"
+    required
+    style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 6px; font-family: inherit; font-size: 14px; background: var(--color-surface);"
+  >
+</div>
+
 
     <!-- Campo de email visible y bonito -->
     <div style="margin-bottom: 12px;">
@@ -1561,6 +1575,8 @@ if (scores.woody >= 4) {
         style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 6px; font-family: inherit; font-size: 14px; background: var(--color-surface);"
       >
     </div>
+
+<input type="hidden" name="resultados_perfume" id="resultadosPerfume">
 
     <!-- Botón enviar bonito, DENTRO del form -->
     <button
