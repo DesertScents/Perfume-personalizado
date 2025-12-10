@@ -1542,13 +1542,15 @@ if (scores.woody >= 4) {
                 <div id="emailFormContainer" style="margin-top: 25px; padding: 20px; background: var(--color-surface); border-radius: 12px; border: 1px solid var(--color-border);">
     <h3 style="margin-bottom: 15px; color: var(--color-primary); font-size: 16px;">📧 Recibir resultados por email</h3>
 
-    <form action="https://formsubmit.co/arnauprofe9@gmail.com" method="POST" id="emailForm">
-        <!-- Campos ocultos -->
-        <input type="hidden" name="_subject" value="Resultado de tu Perfume Personalizado">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_next" value="https://desertscents.github.io/Perfume-personalizado/">
-        <input type="hidden" name="resultados_encuesta" id="surveyResults">
+<form action="https://formsubmit.co/arnauprofe9@gmail.com" method="POST" id="emailForm">
+  <input type="hidden" name="_subject" value="Resultado de tu Perfume Personalizado">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_template" value="table">
+  <!-- de momento sin _next para ver que al menos se envía -->
+  <input type="hidden" name="resultados_encuesta" id="surveyResults">
+  ...
+</form>
+
 
         <!-- Campo de email visible -->
         <div style="margin-bottom: 12px;">
